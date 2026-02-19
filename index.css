@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand: #0A9D8F;
+  --color-brand-light: #E6F5F4;
+  --color-brand-dark: #087A6F;
+  --color-brand-slate: #1F2937;
+  
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  
+  --animate-aurora: aurora 30s infinite alternate linear;
+  --animate-shimmer: shimmer 4s infinite linear;
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 4s ease-in-out infinite;
+
+  @keyframes aurora {
+    0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    50% { transform: translate(10vw, 5vh) rotate(90deg) scale(1.2); }
+    100% { transform: translate(-5vw, 15vh) rotate(180deg) scale(0.9); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-30px) translateX(15px); }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+  }
+}
+
+@layer base {
+  body {
+    @apply antialiased text-slate-900 bg-[#FAFAFA];
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@layer components {
+  .section-light-beam {
+    @apply absolute inset-0 overflow-hidden pointer-events-none;
+  }
+  
+  .section-light-beam::after {
+    content: "";
+    @apply absolute -inset-[100%] w-[300%] h-[300%];
+    background: linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(10, 157, 143, 0.03) 50%,
+      transparent 55%
+    );
+    animation: beam-sweep 15s infinite linear;
+  }
+
+  @keyframes beam-sweep {
+    0% { transform: translate(-20%, -20%); }
+    100% { transform: translate(20%, 20%); }
+  }
+
+  .heading-shimmer {
+    background: linear-gradient(90deg, currentColor 0%, #0A9D8F 40%, #0A9D8F 60%, currentColor 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: color 0.5s;
+  }
+  
+  .heading-shimmer:hover {
+    animation: shimmer 2.5s infinite linear;
+    @apply text-transparent;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

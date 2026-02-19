@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://esm.sh" crossorigin>
+
+    <title>Ingenium Virtual Assistant Limited | Executive VA, Digital Operations, Visa Processing & Device Upgrades</title>
+    <meta name="description" content="Premium executive virtual assistance, AI automation, cocoa export, real estate consulting, visa processing (tourist/student/work/residence), and iPhone upgrades — global support for leaders and businesses.">
+    <meta name="keywords" content="Virtual Assistant, Executive Support, Business Operations, Global Support, Ingenium VA, Visa Support, iPhone Upgrades, Device Migration">
+
+    <!-- Favicon & App Icons -->
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ingeniumva.com/">
+    <meta property="og:site_name" content="Ingenium Virtual Assistant">
+    <meta property="og:title" content="Ingenium Virtual Assistant Limited | Executive VA, Digital Operations, Visa Processing & Device Upgrades">
+    <meta property="og:description" content="Premium executive virtual assistance, AI automation, cocoa export, real estate consulting, visa processing (tourist/student/work/residence), and iPhone upgrades — global support for leaders and businesses.">
+    <!-- Note: og:image works best with an absolute URL (e.g., https://ingeniumva.com/logo.png) -->
+    <meta property="og:image" content="logo.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="en_GB">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://ingeniumva.com/">
+    <meta name="twitter:title" content="Ingenium Virtual Assistant Limited | Executive VA, Digital Operations, Visa Processing & Device Upgrades">
+    <meta name="twitter:description" content="Premium executive virtual assistance, AI automation, cocoa export, real estate consulting, visa processing (tourist/student/work/residence), and iPhone upgrades — global support for leaders and businesses.">
+    <meta name="twitter:image" content="logo.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global Atmosphere */
+        .atmosphere-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        /* Interactive Glow */
+        #mouse-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(10, 157, 143, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        body:hover #mouse-glow {
+            opacity: 1;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #0A9D8F; border-radius: 4px; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="antialiased">
+    <div class="atmosphere-orb w-[800px] h-[800px] bg-brand top-[-200px] left-[-200px] animate-aurora-slow" style="z-index: -1"></div>
+    <div class="atmosphere-orb w-[600px] h-[600px] bg-brand-light bottom-[-100px] right-[-100px] animate-aurora-fast" style="animation-delay: -7s; z-index: -1"></div>
+    
+    <div id="mouse-glow"></div>
+    <div id="root"></div>
+
+    <script>
+      const glow = document.getElementById('mouse-glow');
+      document.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+      });
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
