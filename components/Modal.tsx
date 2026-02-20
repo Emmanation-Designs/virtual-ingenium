@@ -18,6 +18,10 @@ const Modal: React.FC<ModalProps> = ({ service, onClose }) => {
     description: '',
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [generatedMessage, setGeneratedMessage] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -118,10 +122,30 @@ const Modal: React.FC<ModalProps> = ({ service, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const message = `Hi Ingenium Team,%0a%0aInquiry for: ${formData.serviceType}%0aName: ${formData.name}%0aPhone: ${formData.phone}%0aEmail: ${formData.email}%0aPrimary Need: ${formData.need}%0a${label1}: ${formData.projectContext1}%0a${label2}: ${formData.projectContext2}%0aDetails: ${formData.description}%0a%0aSent from Ingenium Website.`;
-    const whatsappUrl = `https://wa.me/447526596522?text=${message}`;
-    window.open(whatsappUrl, '_blank');
+    const message = `Hi Ingenium Team,\n\nInquiry for: ${formData.serviceType}\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nPrimary Need: ${formData.need}\n${label1}: ${formData.projectContext1}\n${label2}: ${formData.projectContext2}\nDetails: ${formData.description}\n\nSent from https://Ingeniumvirtualassistant.com`;
+    setGeneratedMessage(message);
+    setIsSubmitted(true);
+    setIsCopied(false);
   };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(generatedMessage);
+    setIsCopied(true);
+    
+    // Show toast notification
+    const toast = document.createElement('div');
+    toast.className = 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-slate text-white px-6 py-3 rounded-xl shadow-2xl z-[100] flex items-center gap-3 animate-in fade-in zoom-in duration-300';
+    toast.innerHTML = '<i class="fa-solid fa-circle-check text-brand"></i><span class="font-bold">Message Copied!</span>';
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.classList.add('fade-out', 'zoom-out');
+      setTimeout(() => document.body.removeChild(toast), 300);
+      setIsCopied(false);
+    }, 2000);
+  };
+
+  const mailtoLink = `mailto:ingeniumvirtualassistant@zohomail.com?subject=${encodeURIComponent(`Inquiry: ${formData.serviceType} from ${formData.name}`)}&body=${encodeURIComponent(generatedMessage)}`;
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-in fade-in duration-300">
@@ -140,6 +164,7 @@ const Modal: React.FC<ModalProps> = ({ service, onClose }) => {
           </button>
         </div>
 
+        {!isSubmitted ? (
         <form onSubmit={handleSubmit} className="p-8 overflow-y-auto space-y-6 scrollbar-hide">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-2">
@@ -165,6 +190,19 @@ const Modal: React.FC<ModalProps> = ({ service, onClose }) => {
                 className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-4 focus:ring-brand/10 focus:border-brand transition-all font-medium"
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-black text-brand-slate uppercase tracking-widest">Email Address *</label>
+            <input 
+              type="email" 
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              placeholder="you@example.com"
+              className="w-full px-5 py-4 rounded-2xl bg-slate-50 border border-slate-100 focus:outline-none focus:ring-4 focus:ring-brand/10 focus:border-brand transition-all font-medium"
+            />
           </div>
 
           <div className="space-y-2">
@@ -220,10 +258,92 @@ const Modal: React.FC<ModalProps> = ({ service, onClose }) => {
             type="submit"
             className="w-full py-5 bg-brand hover:bg-brand-dark text-white font-black rounded-2xl shadow-xl shadow-brand/20 transition-all flex items-center justify-center gap-4 group"
           >
-            <i className="fa-brands fa-whatsapp text-2xl group-hover:scale-110 transition-transform"></i>
-            <span>Send via WhatsApp</span>
+            <span>Prepare Message</span>
           </button>
         </form>
+        ) : (
+          <div className="p-8 overflow-y-auto space-y-6 scrollbar-hide animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                <i className="fa-solid fa-check"></i>
+              </div>
+              <h3 className="text-2xl font-black text-brand-slate mb-2">Inquiry Ready!</h3>
+              <p className="text-slate-500 font-medium">Choose how you would like to send your inquiry.</p>
+            </div>
+
+            <div className="space-y-6">
+              {/* Option 1: Email */}
+              <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                <h4 className="font-bold text-brand-slate mb-4 flex items-center gap-2">
+                  <i className="fa-solid fa-envelope text-brand"></i> Option 1: Email
+                </h4>
+                <a
+                  href={mailtoLink}
+                  className="block w-full py-4 bg-brand hover:bg-brand-dark text-white font-bold text-center rounded-xl transition-all shadow-lg shadow-brand/10"
+                >
+                  Send via Email App
+                </a>
+              </div>
+
+              {/* Option 2: LinkedIn */}
+              <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                <h4 className="font-bold text-brand-slate mb-4 flex items-center gap-2">
+                  <i className="fa-brands fa-linkedin text-[#0077b5]"></i> Option 2: LinkedIn
+                </h4>
+                
+                <div className="mb-4">
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Step 1: Copy Message</p>
+                  <div className="relative">
+                    <textarea
+                      readOnly
+                      value={generatedMessage}
+                      className="w-full p-4 rounded-xl bg-white border border-slate-200 text-sm text-slate-600 h-32 resize-none focus:outline-none"
+                    />
+                    <button
+                      onClick={handleCopy}
+                      className={`absolute top-2 right-2 px-3 py-1 text-xs font-bold rounded-lg transition-all flex items-center gap-2 ${
+                        isCopied 
+                          ? 'bg-green-100 text-green-700' 
+                          : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
+                      }`}
+                    >
+                      {isCopied ? (
+                        <>
+                          <i className="fa-solid fa-check"></i>
+                          <span>Copied</span>
+                        </>
+                      ) : (
+                        <span>Copy</span>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Step 2: Go to LinkedIn</p>
+                  <a
+                    href="https://www.linkedin.com/company/innocent-ezike/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block w-full py-4 bg-[#0077b5] hover:bg-[#006097] text-white font-bold text-center rounded-xl transition-all shadow-lg shadow-[#0077b5]/20"
+                  >
+                    Open LinkedIn Profile
+                  </a>
+                  <p className="text-xs text-slate-400 text-center mt-3 font-medium">
+                    Paste the copied message when you connect or message us!
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsSubmitted(false)}
+                className="w-full py-3 text-slate-400 font-bold hover:text-brand-slate transition-colors text-sm"
+              >
+                Edit Message
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
