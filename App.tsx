@@ -22,6 +22,12 @@ const App: React.FC = () => {
   useEffect(() => {
     const consent = localStorage.getItem('cookieConsent');
     if (consent) setIsCookieAccepted(true);
+
+    // Developer Credit
+    console.log(
+      "%cDeveloped by Emmanuel Nwaije (Emmanation Designs) • https://Emmanation-designs.vercel.app",
+      "background: #000; color: #0ea5e9; font-size: 16px; font-weight: bold; padding: 10px 20px; border-radius: 8px;"
+    );
   }, []);
 
   const handleOpenModal = (service: Service) => {

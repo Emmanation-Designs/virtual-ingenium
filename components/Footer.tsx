@@ -124,6 +124,9 @@ const Footer: React.FC<FooterProps> = ({ onPolicyClick, onCookieSettingsClick })
           <p className="text-white/20 text-[9px] sm:text-[11px] font-bold uppercase tracking-[0.3em] px-4">
             © {currentYear} Ingenium Virtual Assistant Limited. All rights reserved.
           </p>
+          <p className="text-[9px] sm:text-[10px] text-white/10 mt-4 text-center font-medium tracking-widest uppercase">
+            Site by <a href="https://Emmanation-designs.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-brand transition-colors duration-300">Emmanation Designs</a>
+          </p>
         </div>
       </div>
     </footer>
