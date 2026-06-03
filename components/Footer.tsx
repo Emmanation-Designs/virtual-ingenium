@@ -107,14 +107,33 @@ const Footer: React.FC<FooterProps> = ({ onPolicyClick, onCookieSettingsClick })
               </div>
               <div className="flex items-center gap-4 group">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-brand/10 transition-colors">
-                  <i className="fa-solid fa-phone text-brand text-sm"></i>
+                  <i className="fa-solid fa-envelope text-brand text-sm"></i>
                 </div>
                 <a 
-                  href="tel:+447526596522" 
-                  className="text-sm sm:text-base font-black text-white hover:text-brand transition-all duration-300"
+                  href="mailto:ingeniumvirtualassistant@zohomail.com" 
+                  className="text-[10px] sm:text-xs md:text-sm font-black text-white hover:text-brand transition-all duration-300 break-all"
                 >
-                  +44 7526 596522
+                  ingeniumvirtualassistant@zohomail.com
                 </a>
+              </div>
+              <div className="flex items-center gap-4 group">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-brand/10 transition-colors">
+                  <i className="fa-solid fa-phone text-brand text-sm"></i>
+                </div>
+                <div className="flex flex-col gap-1 sm:gap-2">
+                  <a 
+                    href="tel:+447526596522" 
+                    className="text-sm sm:text-base font-black text-white hover:text-brand transition-all duration-300 leading-none"
+                  >
+                    +44 7526 596522
+                  </a>
+                  <a 
+                    href="tel:+447424936690" 
+                    className="text-sm sm:text-base font-black text-white hover:text-brand transition-all duration-300 leading-none"
+                  >
+                    +44 7424 936690
+                  </a>
+                </div>
               </div>
             </div>
           </div>
