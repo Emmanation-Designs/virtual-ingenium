@@ -93,10 +93,47 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
     },
   ];
 
+  const operationsGroup = ['exec-assist', 'business-ops', 'marketing-excellence', 'customer-success', 'ai-automation', 'project-delivery', 'software-dev', 'graphic-design', 'video-editing'];
+  const operationsServices = services.filter(service => operationsGroup.includes(service.id));
+  
+  const specializedGroup = ['property-consulting', 'agri-cocoa', 'real-estate-mgmt', 'visa-support', 'device-upgrades'];
+  const specializedServices = services.filter(service => specializedGroup.includes(service.id));
+
+  const renderServiceCard = (service: Service) => (
+    <div 
+      key={service.id}
+      onClick={() => onServiceClick(service)}
+      className="group relative p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden flex flex-col h-full"
+    >
+      <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-brand/5 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700"></div>
+
+      <div className="relative z-10 flex flex-col h-full">
+        <div className="w-16 h-16 bg-brand/5 text-brand rounded-[1.2rem] flex items-center justify-center mb-8 group-hover:bg-brand group-hover:text-white group-hover:rotate-6 transition-all duration-500 shadow-sm">
+          <i className={`fa-solid ${service.icon} text-2xl`}></i>
+        </div>
+        
+        <h3 className="text-2xl font-black text-brand-slate mb-4 group-hover:text-brand transition-colors leading-tight">
+          {service.title}
+        </h3>
+        
+        <p className="text-slate-500 text-base leading-relaxed mb-8 flex-grow">
+          {service.description}
+        </p>
+
+        <div className="flex items-center gap-3 text-brand font-black text-xs uppercase tracking-widest mt-auto">
+          <span>Inquire Now</span>
+          <div className="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all">
+            <i className="fa-solid fa-arrow-right-long text-xs transition-transform group-hover:translate-x-1"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <section id="services" className="py-32 bg-[#FAFAFA]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-24">
+        <div className="text-center mb-20 sm:mb-24">
           <div className="inline-block px-4 py-1.5 bg-brand/10 rounded-full mb-6">
             <span className="text-brand font-black text-sm uppercase tracking-widest">Our Solutions</span>
           </div>
@@ -106,37 +143,34 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service) => (
-            <div 
-              key={service.id}
-              onClick={() => onServiceClick(service)}
-              className="group relative p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden flex flex-col h-full"
-            >
-              <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-brand/5 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700"></div>
-
-              <div className="relative z-10 flex flex-col h-full">
-                <div className="w-16 h-16 bg-brand/5 text-brand rounded-[1.2rem] flex items-center justify-center mb-8 group-hover:bg-brand group-hover:text-white group-hover:rotate-6 transition-all duration-500 shadow-sm">
-                  <i className={`fa-solid ${service.icon} text-2xl`}></i>
-                </div>
-                
-                <h3 className="text-2xl font-black text-brand-slate mb-4 group-hover:text-brand transition-colors">
-                  {service.title}
-                </h3>
-                
-                <p className="text-slate-500 text-base leading-relaxed mb-8 flex-grow">
-                  {service.description}
-                </p>
-
-                <div className="flex items-center gap-3 text-brand font-black text-xs uppercase tracking-widest mt-auto">
-                  <span>Inquire Now</span>
-                  <div className="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all">
-                    <i className="fa-solid fa-arrow-right-long text-xs transition-transform group-hover:translate-x-1"></i>
-                  </div>
-                </div>
-              </div>
+        <div className="mb-24">
+          <div className="mb-12 border-b-2 border-slate-100 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <h3 className="text-3xl sm:text-4xl font-black text-brand-slate">Executive Operations <br className="hidden sm:block" />& Digital Excellence</h3>
             </div>
-          ))}
+            <div className="inline-flex items-center gap-2 text-brand font-black text-xs sm:text-sm tracking-widest uppercase bg-brand/5 px-4 py-2 rounded-xl h-fit">
+              <span>9 Services</span>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {operationsServices.map(renderServiceCard)}
+          </div>
+        </div>
+
+        <div>
+          <div className="mb-12 border-b-2 border-slate-100 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+              <h3 className="text-3xl sm:text-4xl font-black text-brand-slate">Specialized Consulting <br className="hidden sm:block" />& Industry Solutions</h3>
+            </div>
+            <div className="inline-flex items-center gap-2 text-brand font-black text-xs sm:text-sm tracking-widest uppercase bg-brand/5 px-4 py-2 rounded-xl h-fit">
+              <span>5 Services</span>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {specializedServices.map(renderServiceCard)}
+          </div>
         </div>
       </div>
     </section>
