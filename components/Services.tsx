@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Service } from '../types';
 
 interface ServicesProps {
@@ -7,6 +7,29 @@ interface ServicesProps {
 
 const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
   const [activeCategory, setActiveCategory] = useState<'operations' | 'specialized'>('operations');
+
+  // Load Calendly script on mount
+  useEffect(() => {
+    const scriptId = 'calendly-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script');
+      script.id = scriptId;
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  const handleBookNow = (e: React.MouseEvent, title: string) => {
+    e.stopPropagation();
+    const calendlyUrl = `https://calendly.com/trelvixai/30min?a1=Interested%20in%3A%20${encodeURIComponent(title)}`;
+    
+    if ((window as any).Calendly) {
+      (window as any).Calendly.initPopupWidget({ url: calendlyUrl });
+    } else {
+      window.open(calendlyUrl, '_blank');
+    }
+  };
 
   const services: Service[] = [
     {
@@ -104,8 +127,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
   const renderServiceCard = (service: Service) => (
     <div 
       key={service.id}
-      onClick={() => onServiceClick(service)}
-      className="group relative p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden flex flex-col h-full"
+      className="group relative p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden flex flex-col h-full"
     >
       <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-brand/5 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700"></div>
 
@@ -122,11 +144,19 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
           {service.description}
         </p>
 
-        <div className="flex items-center gap-3 text-brand font-black text-xs uppercase tracking-widest mt-auto">
-          <span>Inquire Now</span>
-          <div className="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all">
-            <i className="fa-solid fa-arrow-right-long text-xs transition-transform group-hover:translate-x-1"></i>
-          </div>
+        <div className="mt-auto flex flex-col sm:flex-row gap-3 pt-2 w-full">
+          <button 
+            onClick={(e) => { e.stopPropagation(); onServiceClick(service); }}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl border-2 border-brand/20 text-brand font-bold text-sm hover:bg-brand hover:text-white hover:border-brand transition-all outline-none"
+          >
+            Inquire Now
+          </button>
+          <button 
+            onClick={(e) => handleBookNow(e, service.title)}
+            className="flex-1 flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl bg-brand text-white font-bold text-sm shadow-md shadow-brand/20 hover:bg-brand-dark hover:-translate-y-0.5 hover:shadow-lg hover:shadow-brand/30 transition-all outline-none"
+          >
+            Book Now <i className="fa-solid fa-calendar-check"></i>
+          </button>
         </div>
       </div>
     </div>
