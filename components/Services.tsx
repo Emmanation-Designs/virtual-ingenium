@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Service } from '../types';
 
 interface ServicesProps {
@@ -6,6 +6,8 @@ interface ServicesProps {
 }
 
 const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
+  const [activeCategory, setActiveCategory] = useState<'operations' | 'specialized'>('operations');
+
   const services: Service[] = [
     {
       id: 'exec-assist',
@@ -133,7 +135,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
   return (
     <section id="services" className="py-32 bg-[#FAFAFA]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20 sm:mb-24">
+        <div className="text-center mb-16">
           <div className="inline-block px-4 py-1.5 bg-brand/10 rounded-full mb-6">
             <span className="text-brand font-black text-sm uppercase tracking-widest">Our Solutions</span>
           </div>
@@ -143,33 +145,50 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
           </p>
         </div>
 
-        <div className="mb-24">
-          <div className="mb-12 border-b-2 border-slate-100 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <h3 className="text-3xl sm:text-4xl font-black text-brand-slate">Executive Operations <br className="hidden sm:block" />& Digital Excellence</h3>
-            </div>
-            <div className="inline-flex items-center gap-2 text-brand font-black text-xs sm:text-sm tracking-widest uppercase bg-brand/5 px-4 py-2 rounded-xl h-fit">
-              <span>9 Services</span>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {operationsServices.map(renderServiceCard)}
-          </div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-16 bg-slate-200/50 p-2 rounded-3xl sm:rounded-full w-fit mx-auto">
+          <button
+            onClick={() => setActiveCategory('operations')}
+            className={`px-6 sm:px-8 py-4 sm:py-3.5 rounded-2xl sm:rounded-full font-bold text-sm sm:text-base transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 ${
+              activeCategory === 'operations' 
+                ? 'bg-brand text-white shadow-lg shadow-brand/20 scale-100' 
+                : 'text-slate-500 hover:text-brand hover:bg-white/50 scale-95'
+            }`}
+          >
+            Operations & Digital
+            <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-black transition-colors ${
+              activeCategory === 'operations' ? 'bg-white/20 text-white' : 'bg-slate-300 text-slate-600'
+            }`}>9</span>
+          </button>
+          <button
+            onClick={() => setActiveCategory('specialized')}
+            className={`px-6 sm:px-8 py-4 sm:py-3.5 rounded-2xl sm:rounded-full font-bold text-sm sm:text-base transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 ${
+              activeCategory === 'specialized' 
+                ? 'bg-brand text-white shadow-lg shadow-brand/20 scale-100' 
+                : 'text-slate-500 hover:text-brand hover:bg-white/50 scale-95'
+            }`}
+          >
+            Specialized Consulting
+            <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-black transition-colors ${
+              activeCategory === 'specialized' ? 'bg-white/20 text-white' : 'bg-slate-300 text-slate-600'
+            }`}>5</span>
+          </button>
         </div>
 
-        <div>
-          <div className="mb-12 border-b-2 border-slate-100 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <h3 className="text-3xl sm:text-4xl font-black text-brand-slate">Specialized Consulting <br className="hidden sm:block" />& Industry Solutions</h3>
-            </div>
-            <div className="inline-flex items-center gap-2 text-brand font-black text-xs sm:text-sm tracking-widest uppercase bg-brand/5 px-4 py-2 rounded-xl h-fit">
-              <span>5 Services</span>
+        <div className="relative overflow-hidden min-h-[600px]">
+          <div className={`transition-all duration-500 ease-in-out absolute w-full ${
+            activeCategory === 'operations' ? 'opacity-100 translate-x-0 relative z-10' : 'opacity-0 translate-x-[-100%] pointer-events-none'
+          }`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {operationsServices.map(renderServiceCard)}
             </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {specializedServices.map(renderServiceCard)}
+
+          <div className={`transition-all duration-500 ease-in-out absolute top-0 w-full ${
+            activeCategory === 'specialized' ? 'opacity-100 translate-x-0 relative z-10' : 'opacity-0 translate-x-[100%] pointer-events-none'
+          }`}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {specializedServices.map(renderServiceCard)}
+            </div>
           </div>
         </div>
       </div>

@@ -3,13 +3,18 @@ import React from 'react';
 const Hero: React.FC = () => {
   const scrollToSection = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
-    const targetId = href.replace('#', '');
+    const targetId = href.replace('#', '').replace('/', '');
     const element = document.getElementById(targetId);
     if (element) {
+      const topPos = element.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({
-        top: element.offsetTop - 80,
+        top: topPos,
         behavior: 'smooth'
       });
+      window.history.pushState(null, '', `/${targetId}`);
+    } else if (targetId === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', `/home`);
     }
   };
 
@@ -43,14 +48,14 @@ const Hero: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 sm:mb-20 px-6 sm:px-0">
             <button 
-              onClick={(e) => scrollToSection(e, '#services')}
+              onClick={(e) => scrollToSection(e, '/services')}
               className="relative overflow-hidden group px-8 py-4 sm:px-10 sm:py-5 bg-brand text-white font-black rounded-2xl shadow-2xl shadow-brand/30 hover:bg-brand-dark transition-all transform hover:-translate-y-1 active:translate-y-0 w-full sm:w-auto text-base sm:text-xl"
             >
               <span className="relative z-10">Start Your Project</span>
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
             </button>
             <button 
-              onClick={(e) => scrollToSection(e, '#about')}
+              onClick={(e) => scrollToSection(e, '/about')}
               className="px-8 py-4 sm:px-10 sm:py-5 bg-white/10 text-white font-black rounded-2xl border border-white/20 hover:bg-white/20 backdrop-blur-sm transition-all w-full sm:w-auto text-base sm:text-xl"
             >
               Learn More

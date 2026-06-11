@@ -19,15 +19,18 @@ const Footer: React.FC<FooterProps> = ({ onPolicyClick, onCookieSettingsClick })
 
   const scrollToSection = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
-    const targetId = href.replace('#', '');
+    const targetId = href.replace('#', '').replace('/', '');
     const element = document.getElementById(targetId);
     if (element) {
+      const topPos = element.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({
-        top: element.offsetTop - 80,
+        top: topPos,
         behavior: 'smooth'
       });
-    } else if (href === '#home') {
+      window.history.pushState(null, '', `/${targetId}`);
+    } else if (targetId === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.history.pushState(null, '', `/home`);
     }
   };
 
@@ -79,11 +82,11 @@ const Footer: React.FC<FooterProps> = ({ onPolicyClick, onCookieSettingsClick })
           <div className="col-span-1">
             <h4 className="text-[11px] sm:text-xs font-black uppercase tracking-[0.2em] mb-6 sm:mb-8 text-brand">Explore</h4>
             <ul className="space-y-3 sm:space-y-4 font-bold text-white/50 text-base">
-              <li><button onClick={(e) => scrollToSection(e, '#home')} className="hover:text-brand transition-colors text-left">Home</button></li>
-              <li><button onClick={(e) => scrollToSection(e, '#about')} className="hover:text-brand transition-colors text-left">Our Mission</button></li>
-              <li><button onClick={(e) => scrollToSection(e, '#process')} className="hover:text-brand transition-colors text-left">How it Works</button></li>
-              <li><button onClick={(e) => scrollToSection(e, '#services')} className="hover:text-brand transition-colors text-left">Our Services</button></li>
-              <li><button onClick={(e) => scrollToSection(e, '#testimonials')} className="hover:text-brand transition-colors text-left">Testimonials</button></li>
+              <li><button onClick={(e) => scrollToSection(e, '/home')} className="hover:text-brand transition-colors text-left">Home</button></li>
+              <li><button onClick={(e) => scrollToSection(e, '/about')} className="hover:text-brand transition-colors text-left">Our Mission</button></li>
+              <li><button onClick={(e) => scrollToSection(e, '/process')} className="hover:text-brand transition-colors text-left">How it Works</button></li>
+              <li><button onClick={(e) => scrollToSection(e, '/services')} className="hover:text-brand transition-colors text-left">Our Services</button></li>
+              <li><button onClick={(e) => scrollToSection(e, '/testimonials')} className="hover:text-brand transition-colors text-left">Testimonials</button></li>
             </ul>
           </div>
 

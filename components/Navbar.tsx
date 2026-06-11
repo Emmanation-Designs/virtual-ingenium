@@ -6,12 +6,12 @@ const Navbar: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
   
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Process', href: '#process' },
-    { name: 'Results', href: '#achievements' },
-    { name: 'Services', href: '#services' },
-    { name: 'Clients', href: '#testimonials' },
+    { name: 'Home', href: '/home' },
+    { name: 'About', href: '/about' },
+    { name: 'Process', href: '/process' },
+    { name: 'Results', href: '/achievements' },
+    { name: 'Services', href: '/services' },
+    { name: 'Clients', href: '/testimonials' },
   ];
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const Navbar: React.FC = () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
+          window.history.replaceState(null, '', `/${entry.target.id}`);
         }
       });
     };
@@ -36,12 +37,25 @@ const Navbar: React.FC = () => {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     
     navLinks.forEach(link => {
-      const id = link.href.replace('#', '');
+      const id = link.href.replace('/', '');
       const element = document.getElementById(id);
       if (element) observer.observe(element);
     });
 
     window.addEventListener('scroll', handleScroll);
+    
+    // Initial page load routing
+    const path = window.location.pathname.replace('/', '');
+    if (path && path !== 'home') {
+      const element = document.getElementById(path);
+      if (element) {
+        setTimeout(() => {
+          const topPos = element.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: topPos, behavior: 'smooth' });
+        }, 100);
+      }
+    }
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
@@ -50,13 +64,11 @@ const Navbar: React.FC = () => {
 
   const scrollToSection = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
-    const targetId = href.replace('#', '');
+    const targetId = href.replace('#', '').replace('/', '');
     const element = document.getElementById(targetId);
     if (element) {
       const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
       const offsetPosition = elementPosition - offset;
 
       window.scrollTo({
@@ -65,9 +77,11 @@ const Navbar: React.FC = () => {
       });
       
       setActiveSection(targetId);
-    } else if (href === '#home') {
+      window.history.pushState(null, '', `/${targetId}`);
+    } else if (targetId === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setActiveSection('home');
+      window.history.pushState(null, '', `/home`);
     }
     setIsMenuOpen(false);
   };
@@ -80,8 +94,8 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <a 
-              href="#home" 
-              onClick={(e) => scrollToSection(e, '#home')}
+              href="/home" 
+              onClick={(e) => scrollToSection(e, '/home')}
               className="flex items-center gap-2 sm:gap-3 group"
             >
               <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center transition-transform group-hover:scale-105 shrink-0">
@@ -127,8 +141,8 @@ const Navbar: React.FC = () => {
               );
             })}
             <a 
-              href="#services"
-              onClick={(e) => scrollToSection(e, '#services')}
+              href="/services"
+              onClick={(e) => scrollToSection(e, '/services')}
               className="px-5 py-2 sm:px-6 sm:py-2.5 bg-brand text-white font-bold rounded-full hover:bg-brand-dark transition-all hover:shadow-lg hover:shadow-brand/30 transform hover:-translate-y-0.5"
             >
               Get Started
@@ -154,7 +168,7 @@ const Navbar: React.FC = () => {
       }`}>
         <div className="px-4 pt-2 pb-6 space-y-1">
           {navLinks.map((link) => {
-            const targetId = link.href.replace('#', '');
+            const targetId = link.href.replace('/', '');
             const isActive = activeSection === targetId;
             return (
               <a
@@ -172,8 +186,8 @@ const Navbar: React.FC = () => {
           })}
           <div className="px-4 pt-4">
             <a 
-              href="#services"
-              onClick={(e) => scrollToSection(e, '#services')}
+              href="/services"
+              onClick={(e) => scrollToSection(e, '/services')}
               className="block w-full text-center py-4 bg-brand text-white font-bold rounded-xl shadow-lg shadow-brand/20"
             >
               Get Started
