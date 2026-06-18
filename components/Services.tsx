@@ -22,7 +22,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
 
   const handleBookNow = (e: React.MouseEvent, title: string) => {
     e.stopPropagation();
-    const calendlyUrl = `https://calendly.com/trelvixai/30min?a1=Interested%20in%3A%20${encodeURIComponent(title)}`;
+    const calendlyUrl = `https://calendly.com/blackdiamondworldicu/30min?primary_color=00A896&a1=Interested%20in%3A%20${encodeURIComponent(title)}`;
     
     if ((window as any).Calendly) {
       (window as any).Calendly.initPopupWidget({ url: calendlyUrl });
@@ -184,7 +184,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
                 : 'text-slate-500 hover:text-brand hover:bg-white/50 scale-95'
             }`}
           >
-            Operations & Digital
+            Digital & ICT Solutions
             <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-black transition-colors ${
               activeCategory === 'operations' ? 'bg-white/20 text-white' : 'bg-slate-300 text-slate-600'
             }`}>9</span>
@@ -197,7 +197,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
                 : 'text-slate-500 hover:text-brand hover:bg-white/50 scale-95'
             }`}
           >
-            Specialized Consulting
+            Investments, Product and Consultation Services
             <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-black transition-colors ${
               activeCategory === 'specialized' ? 'bg-white/20 text-white' : 'bg-slate-300 text-slate-600'
             }`}>5</span>
