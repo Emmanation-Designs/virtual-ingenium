@@ -1,0 +1,15 @@
+/* TEAM */
+Developer: Emmanuel Nwaije
+Role: Lead Developer & Designer
+Company: Emmanation Designs
+Twitter/Portfolio: https://Emmanation-designs.vercel.app
+
+/* THANKS */
+Built with Next.js, Tailwind CSS, Vercel
+
+/* SITE */
+Last update: 2026/02/23
+Standards: HTML5, CSS3, Accessibility
+Components: React, TypeScript
+
+Made with pride in Lagos, Nigeria.
