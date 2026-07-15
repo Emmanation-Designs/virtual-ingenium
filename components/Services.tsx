@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Service } from '../types';
 
 interface ServicesProps {
@@ -8,27 +8,10 @@ interface ServicesProps {
 const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
   const [activeCategory, setActiveCategory] = useState<'operations' | 'specialized'>('operations');
 
-  // Load Calendly script on mount
-  useEffect(() => {
-    const scriptId = 'calendly-script';
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
-      script.id = scriptId;
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
   const handleBookNow = (e: React.MouseEvent, title: string) => {
     e.stopPropagation();
-    const calendlyUrl = `https://calendly.com/blackdiamondworldicu/30min?primary_color=00A896&a1=Interested%20in%3A%20${encodeURIComponent(title)}`;
-    
-    if ((window as any).Calendly) {
-      (window as any).Calendly.initPopupWidget({ url: calendlyUrl });
-    } else {
-      window.open(calendlyUrl, '_blank');
-    }
+    const calUrl = `https://cal.com/ingenium-virtual-assistant-10viin/30min?notes=${encodeURIComponent(`Interested in: ${title}`)}`;
+    window.open(calUrl, '_blank', 'noopener,noreferrer');
   };
 
   const services: Service[] = [
