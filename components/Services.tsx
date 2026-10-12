@@ -88,6 +88,12 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
       icon: 'fa-clapperboard',
     },
     {
+      id: 'flight-travel',
+      title: 'Flight & Travel Process Assistance',
+      description: 'Dedicated end-to-end assistance throughout your journey: flight reservations, multi-city travel planning, check-in support, boarding coordination, baggage guidance, and transit navigation.',
+      icon: 'fa-plane-departure',
+    },
+    {
       id: 'visa-support',
       title: 'Visa and Immigration Support',
       description: 'We process Tourist, Student, Work, and Residence Visas for countries of your choice, handling full documentation, applications, and follow-ups for efficient approvals.',
@@ -104,7 +110,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
   const operationsGroup = ['exec-assist', 'business-ops', 'marketing-excellence', 'customer-success', 'ai-automation', 'project-delivery', 'software-dev', 'graphic-design', 'video-editing'];
   const operationsServices = services.filter(service => operationsGroup.includes(service.id));
   
-  const specializedGroup = ['property-consulting', 'agri-cocoa', 'real-estate-mgmt', 'visa-support', 'device-upgrades'];
+  const specializedGroup = ['property-consulting', 'agri-cocoa', 'real-estate-mgmt', 'flight-travel', 'visa-support', 'device-upgrades'];
   const specializedServices = services.filter(service => specializedGroup.includes(service.id));
 
   const renderServiceCard = (service: Service) => (
@@ -154,7 +160,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
           </div>
           <h2 className="text-4xl sm:text-6xl font-black text-brand-slate mb-6">Our Services</h2>
           <p className="text-slate-500 text-xl max-w-3xl mx-auto">
-            A comprehensive suite of 14 bespoke services designed to empower leaders and scale global operations.
+            A comprehensive suite of {services.length} bespoke services designed to empower leaders and scale global operations.
           </p>
         </div>
 
@@ -170,7 +176,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
             Digital & ICT Solutions
             <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-black transition-colors ${
               activeCategory === 'operations' ? 'bg-white/20 text-white' : 'bg-slate-300 text-slate-600'
-            }`}>9</span>
+            }`}>{operationsServices.length}</span>
           </button>
           <button
             onClick={() => setActiveCategory('specialized')}
@@ -183,7 +189,7 @@ const Services: React.FC<ServicesProps> = ({ onServiceClick }) => {
             Investments, Product and Consultation Services
             <span className={`px-2 py-0.5 rounded-full text-[10px] uppercase font-black transition-colors ${
               activeCategory === 'specialized' ? 'bg-white/20 text-white' : 'bg-slate-300 text-slate-600'
-            }`}>5</span>
+            }`}>{specializedServices.length}</span>
           </button>
         </div>
 

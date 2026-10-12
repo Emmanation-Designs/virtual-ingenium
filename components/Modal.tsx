@@ -104,6 +104,13 @@ const Modal: React.FC<ModalProps> = ({ service, onClose }) => {
       placeholder2 = 'e.g. Single project, Monthly retainer';
       needPlaceholder = 'e.g. Professional editing for marketing campaign';
       break;
+    case 'flight-travel':
+      label1 = 'Travel Route & Preferred Airlines';
+      placeholder1 = 'e.g. London (LHR) to New York (JFK), British Airways';
+      label2 = 'Travel Dates & Number of Travelers';
+      placeholder2 = 'e.g. Nov 15 - Nov 28 (2 adults, 1 child)';
+      needPlaceholder = 'e.g. Flight booking assistance, check-in support, and airport transit coordination';
+      break;
     case 'visa-support':
       label1 = 'Visa Category';
       placeholder1 = 'e.g. Student, Work, Tourist, Residence';
